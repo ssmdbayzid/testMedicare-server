@@ -1,9 +1,11 @@
-import User from "../models/UserSchema";
+const User = require("../models/UserSchema");
 const bcrypt = require("bcryptjs")
 
-UserSchema
-export const register = async (req, res) => {
+
+exports.register = async (req, res) => {
     const {name, email, password, role, gender, photo} = req.body;
+
+    console.log(req.body)
     try {
         let  user = null;
         if(role === "patient"){
@@ -58,10 +60,11 @@ export const register = async (req, res) => {
     }
 }
 
-export const login = async (req, res) => {
+exports.login = async (req, res) => {
     try {
-        
+        res.status(200).json({message: "this is from login"})
     } catch (error) {
+        res.status(500).json({message: "this is from login error"})
         
     }
 }

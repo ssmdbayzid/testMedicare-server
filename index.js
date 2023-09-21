@@ -5,7 +5,7 @@ const cors = require('cors');
 const connectDB = require("./config/connectDB")
 
 const dotenv  = require('dotenv');
-const { default: authRouter } = require('./Routes/authRoutes');
+const authRouter = require("./Routes/authRoutes")
 
 
 dotenv.config();
