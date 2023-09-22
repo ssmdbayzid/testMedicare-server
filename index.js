@@ -3,13 +3,14 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const connectDB = require("./config/connectDB")
-
 const dotenv  = require('dotenv');
+dotenv.config();
+
 const authRouter = require("./Routes/authRoutes");
 const userRouter = require('./Routes/userRoute');
+const doctorRouter = require('./Routes/doctorRoute');
 
 
-dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 8000
@@ -23,7 +24,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors(corsOptions))
 app.use("/api/v1/auth", authRouter)
-app.use("/users", userRouter)
+app.use("/api/v1/users", userRouter)
+app.use("/api/v1/doctors", doctorRouter)
 
 
 app.get('/', (req, res)=> {

@@ -1,10 +1,12 @@
-const { getUser, getAllUser, updateUser, deleteUser } = require("../controller/userController")
+const { authenticate, restrict } = require("../auth/verifyToken")
+const { getSingleUser, getAllUser, updateUser, deleteUser } = require("../controller/userController")
 
 const userRouter = require("express").Router()
 
-userRouter.get("/", getAllUser)
-userRouter.get("/:id", getUser)
-userRouter.put("/:id", updateUser)
-userRouter.put("/:id", deleteUser)
+
+userRouter.get("/", authenticate, restrict(["admin"]), getAllUser)
+userRouter.get("/:id", authenticate, restrict(["patient"]), getSingleUser)
+userRouter.put("/:id", authenticate, restrict(["patient"]), updateUser)
+userRouter.put("/:id", authenticate, restrict(["patient"]), deleteUser)
 
 module.exports =  userRouter;

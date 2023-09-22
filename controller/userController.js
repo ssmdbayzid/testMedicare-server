@@ -2,7 +2,7 @@ const User = require("../models/UserSchema")
 // Get all users
 exports.getAllUser = async (req, res) => {
     try {
-        const users = await User.find();
+        const users = await User.find().select("-password");
         return res.status(200).json({success: true, data: users})
     } catch (error) {
         return res.status(404).json({success: false,  message: "Not found"})
@@ -10,10 +10,10 @@ exports.getAllUser = async (req, res) => {
 }
 
 // Get single user
-exports.getUser = async (req, res) => {
+exports.getSingleUser = async (req, res) => {
     const userId = req.params.id;
     try {
-        const user = await User.findById(userId)
+        const user = await User.findById(userId).select("-password")
 
         return res.status(200).json({success: true, message: "User Found", data: user})
     } catch (error) {
