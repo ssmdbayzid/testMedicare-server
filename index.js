@@ -5,7 +5,8 @@ const cors = require('cors');
 const connectDB = require("./config/connectDB")
 
 const dotenv  = require('dotenv');
-const authRouter = require("./Routes/authRoutes")
+const authRouter = require("./Routes/authRoutes");
+const userRouter = require('./Routes/userRoute');
 
 
 dotenv.config();
@@ -22,6 +23,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors(corsOptions))
 app.use("/api/v1/auth", authRouter)
+app.use("/users", userRouter)
 
 
 app.get('/', (req, res)=> {
