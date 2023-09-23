@@ -9,6 +9,7 @@ dotenv.config();
 const authRouter = require("./Routes/authRoutes");
 const userRouter = require('./Routes/userRoute');
 const doctorRouter = require('./Routes/doctorRoute');
+const reviewRouter = require('./Routes/reviewRouter');
 
 
 
@@ -26,6 +27,7 @@ app.use(cors(corsOptions))
 app.use("/api/v1/auth", authRouter)
 app.use("/api/v1/users", userRouter)
 app.use("/api/v1/doctors", doctorRouter)
+app.use("/api/v1/reviews", reviewRouter)
 
 
 app.get('/', (req, res)=> {
