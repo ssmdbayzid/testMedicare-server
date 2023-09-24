@@ -105,8 +105,7 @@ exports.login = async (req, res) => {
 
         const token = generateToken(user)
 
-        const {password, role, appointment, ...rest} = user._doc;
-        console.log("reset data appear ", {...rest})
+        const {password, role, appointment, ...rest} = user._doc;       
 
        return res
        .status(200)

@@ -28,11 +28,13 @@ exports.getAllDoctors = async (req, res) => {
 exports.getSingleDoctor = async (req, res) => {
     const doctorId = req.params.id;
     try {
-        const doctor = await Doctor.findById(doctorId).select("-password")
+        const doctor = await Doctor.findById(doctorId)
+        .populate("reviews")
+        .select("-password")
 
         return res.status(200).json({success: true, message: "Doctor Found", data: doctor})
     } catch (error) {
-        return res.staus(404).json({message: "Doctor not found"})
+        return res.status(404).json({message: "Doctor not found"})
     }
 }
 

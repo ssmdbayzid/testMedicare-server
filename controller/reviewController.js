@@ -15,6 +15,7 @@ exports.createReview = async (req, res) => {
     if(!req.body.doctor) req.body.doctor = req.params.doctorId;
     if(!req.body.user) req.body.user = req.userId;
 
+    console.log(req.body.user)
     try {
         const createdReview = await Review.create(req.body);
         await Doctor.findByIdAndUpdate(req.body.doctor, {
