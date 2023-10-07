@@ -90,7 +90,7 @@ exports.login = async (req, res) => {
 
         // check  if not user  exist
         if(!user){
-            return res.status(404).json({message: "Invalid credentials"})
+            return res.status(404).json({success: false, message: "Invalid credentials"})
         }
 
         if(user){
