@@ -12,6 +12,7 @@ const generateToken = user => {
 
 
 exports.register = async (req, res) => {
+    console.log(req.body)
     const {name, email, password, role, gender, photo} = req.body;    
     try {
         let  user = null;
@@ -77,6 +78,7 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
 
     const {email, password} = req.body;
+    console.log(req.body)
     try {
         let user = null;
         
