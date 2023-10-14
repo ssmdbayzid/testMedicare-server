@@ -12,8 +12,13 @@ const generateToken = user => {
 
 
 exports.register = async (req, res) => {
+<<<<<<< HEAD
     const {name, email, password, role, gender, photo} = req.body;  
     console.log(req.body)  
+=======
+    console.log(req.body)
+    const {name, email, password, role, gender, photo} = req.body;    
+>>>>>>> af1783df3ab4f13827e9c9cd494ec2bfb9149979
     try {
         let  user = null;
         if(role === "patient"){            
@@ -79,6 +84,7 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
 
     const {email, password} = req.body;
+    console.log(req.body)
     try {
         let user = null;
         
