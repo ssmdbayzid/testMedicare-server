@@ -1,3 +1,4 @@
+const Booking = require("../models/BookingSchema");
 const Doctor = require("../models/DoctorSchema")
 // Get all Doctor
 
@@ -63,5 +64,32 @@ try {
     return res.status(200).json({success:  true, message: `Delete ${deleteDoctor.name} user successfully`})
 } catch (error) {
     return res.status(500).json({success: false, message: error.message})
+}
+}
+
+// get Doctor profile
+
+exports.doctorProfile = async (req, res) =>{
+    const doctorId = req.doctorId;
+    try {
+        const doctor = await Doctor.findById(doctorId)
+        if(!doctor){
+            return res
+            .status(404)
+            .json({success: false, message: "Doctor not found"})
+        }
+
+        const {password, ...rest } = doctor._doc;
+        const appointment = await Booking.find({doctor: doctorId})
+
+        return res
+        .status(200)
+        .json({success: true, message: "Profile info is getting", 
+    data: {...rest, appointment}})
+
+    } catch (error) {
+        return res
+        .status(500)
+        .json({success: true, message: "Somethings went wrong, cannot get info"})
 }
 }

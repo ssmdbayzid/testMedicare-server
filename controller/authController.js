@@ -12,7 +12,8 @@ const generateToken = user => {
 
 
 exports.register = async (req, res) => {
-    const {name, email, password, role, gender, photo} = req.body;    
+    const {name, email, password, role, gender, photo} = req.body;  
+    console.log(req.body)  
     try {
         let  user = null;
         if(role === "patient"){            
@@ -28,7 +29,8 @@ exports.register = async (req, res) => {
             }
         }
 
-        if(user){            
+        if(user){      
+                  
             return res.status(400).json({message: "User already exist"})
         }
 
