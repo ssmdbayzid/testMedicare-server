@@ -3,7 +3,8 @@ const {
     getSingleDoctor, 
     getAllDoctors, 
     updateDoctor, 
-    deleteDoctor 
+    deleteDoctor, 
+    doctorProfile
 } = require("../controller/doctorCollection")
 const reviewRouter = require("./reviewRouter")
 const doctorRouter = require("express").Router()
@@ -17,4 +18,5 @@ doctorRouter.get("/:id", getSingleDoctor)
 doctorRouter.put("/:id", authenticate, restrict(["doctor"]), updateDoctor)
 doctorRouter.delete("/:id", authenticate, restrict(["doctor"]), deleteDoctor)
 
+doctorRouter.get('/profile/me', authenticate, restrict(["doctor"]), doctorProfile)
 module.exports = doctorRouter;

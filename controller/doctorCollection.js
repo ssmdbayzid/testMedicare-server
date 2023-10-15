@@ -91,5 +91,4 @@ exports.doctorProfile = async (req, res) =>{
         return res
         .status(500)
         .json({success: true, message: "Somethings went wrong, cannot get info"})
-}
-}
+}}
