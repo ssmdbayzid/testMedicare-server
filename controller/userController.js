@@ -93,6 +93,8 @@ exports.getMyAppointment = async (req, res) =>{
         return res.status(200)
         .json({success: true, message: "Appointment are getting", data: doctors})
     } catch (error) {
-         
+         return res
+         .status(505)
+         .json({success:false, message: "Something wents wrong"})
     }
 }
