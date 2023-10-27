@@ -5,9 +5,10 @@ const bcrypt = require("bcryptjs")
 
 
 const generateToken = user => {
+    
     return jwt.sign({id:user._id, role: user.role}, process.env.JWT_SECRET_KEY, {
-        expiresIn: "15h",
-    })
+        expiresIn: "15h"
+    })    
 }
 
 
@@ -79,7 +80,8 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
 
-    const { email, password } = req.body;
+    const {email, password} = req.body;
+    console.log(req.body)
     try {
         let user = null;
         
@@ -101,12 +103,14 @@ exports.login = async (req, res) => {
         }
         // compare password 
 
-        const isPasswordMatched = await bcrypt.compare(password, user.password)
+        const isPasswordMatched = await bcrypt.compare(req.body.password, user.password)
         if(!isPasswordMatched){
             return res.status(400).json({message: "User or password invalid"})
         }
 
         const token = generateToken(user)
+
+        console.log(token)
 
         const {password, role, appointment, ...rest} = user._doc;       
 

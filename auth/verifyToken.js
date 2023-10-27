@@ -4,7 +4,7 @@ const User = require("../models/UserSchema")
 
 exports.authenticate = async (req, res, next)  =>{
     const authToken = req.headers.authorization;
-    
+    console.log("token", authToken)
     if(!authToken || !authToken.startsWith("Bearer ")){
         return res
         .status(401)
@@ -13,8 +13,7 @@ exports.authenticate = async (req, res, next)  =>{
     try {
         const  token = authToken.split(" ")[1];
 
-        // verify token
-
+        // verify token    
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY)       
         
 
@@ -44,9 +43,12 @@ exports.restrict = roles => async  (req, res, next) => {
         user = (patient || doctor)
     }
 
+    if(user){
+        console.log(user, roles)        
+    }
 
     if(!roles.includes(user.role)){
-        
+        console.log("this is from unauthorized")
         return res
         .status(401)        
         .json({success: false, message: "User unauthorized"})
