@@ -13,7 +13,7 @@ const generateToken = user => {
 
 exports.register = async (req, res) => {
 
-    console.log(req.body)
+    
     const {name, email, password, role, gender, photo} = req.body;    
     try {
         let  user = null;
@@ -79,8 +79,7 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
 
-    const {email, password} = req.body;
-    console.log(req.body)
+    const { email, password } = req.body;
     try {
         let user = null;
         
@@ -102,9 +101,9 @@ exports.login = async (req, res) => {
         }
         // compare password 
 
-        const isPasswordMatched = await bcrypt.compare(req.body.password, user.password)
+        const isPasswordMatched = await bcrypt.compare(password, user.password)
         if(!isPasswordMatched){
-            return res.status(400).json({message: "Invalid credentials"})
+            return res.status(400).json({message: "User or password invalid"})
         }
 
         const token = generateToken(user)

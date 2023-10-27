@@ -4,6 +4,7 @@ const User = require("../models/UserSchema")
 
 exports.authenticate = async (req, res, next)  =>{
     const authToken = req.headers.authorization;
+    
     if(!authToken || !authToken.startsWith("Bearer ")){
         return res
         .status(401)
@@ -43,12 +44,9 @@ exports.restrict = roles => async  (req, res, next) => {
         user = (patient || doctor)
     }
 
-    if(user){
-        console.log(user, roles)
-        
-    }
 
     if(!roles.includes(user.role)){
+        
         return res
         .status(401)        
         .json({success: false, message: "User unauthorized"})

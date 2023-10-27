@@ -6,6 +6,7 @@ exports.getAllDoctors = async (req, res) => {
     try {
         const {query} = req.query;
         let doctors;
+        /*
         if(query){
             doctors = await Doctor.find({
                 isApproved: "approved",
@@ -18,7 +19,9 @@ exports.getAllDoctors = async (req, res) => {
         else{
         doctors = await Doctor.find({isApproved: "approved"})
         .select("-password");
-        }
+        }*/
+        doctors = await Doctor.find()
+        .select("-password");
         return res.status(200).json({success: true, data: doctors})
     } catch (error) {
         return res.status(404).json({success: false,  message: "Not found"})
