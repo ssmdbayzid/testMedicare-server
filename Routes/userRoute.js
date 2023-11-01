@@ -6,13 +6,10 @@ const userRouter = require("express").Router()
 
 userRouter.get("/", authenticate, restrict(["parun devtient"]), getAllUser)
 userRouter.get("/:id", authenticate, restrict(["patient"]), getSingleUser)
-userRouter.get("/:id", authenticate, restrict(["patient"]), getSingleUser)
 userRouter.get("/profile/me", authenticate, restrict(["patient"]), getUserProfile)
 userRouter.get("/appointment/my-appointments", authenticate, restrict(["patient"]), getMyAppointment)
 
 userRouter.put("/:id", authenticate, restrict(["patient"]), updateUser)
-userRouter.put("/:id", authenticate, restrict(["patient"]), deleteUser)
-userRouter.put("/:id", authenticate, restrict(["patient"]), deleteUser)
-userRouter.put("/:id", authenticate, restrict(["patient"]), deleteUser)
+userRouter.delete("/:id", authenticate, restrict(["patient"]), deleteUser)
 
 module.exports =  userRouter;
