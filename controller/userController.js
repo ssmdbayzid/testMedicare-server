@@ -25,19 +25,18 @@ exports.getSingleUser = async (req, res) => {
 
 // Update User
 exports.updateUser = async (req, res)=> {
-    const userId = req.params.id;
-    console.log(req.body)
+    const userId = req.params.id;        
     try {
         const user = await User.findById(userId);
         if(!user){
             return res.status(404).json({message:  "User not found"})
         }
         const updateUser = await User.findByIdAndUpdate(userId, req.body, { new: true })
-
+        
         return res.status(200).json({success: true, message: "User update successfully", updateUser})
     } catch (error) {
         return res.status(401).json({success:  false, message: error.message})
-    }
+    }    
 }
 
 // Delete User

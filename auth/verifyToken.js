@@ -3,8 +3,7 @@ const Doctor = require("../models/DoctorSchema")
 const User = require("../models/UserSchema")
 
 exports.authenticate = async (req, res, next)  =>{
-    const authToken = req.headers.authorization;
-    console.log("token", authToken)
+    const authToken = req.headers.authorization;    
     if(!authToken || !authToken.startsWith("Bearer ")){
         return res
         .status(401)
@@ -42,11 +41,7 @@ exports.restrict = roles => async  (req, res, next) => {
     if(patient || doctor){
         user = (patient || doctor)
     }
-
-    if(user){
-        console.log(user, roles)        
-    }
-
+    
     if(!roles.includes(user.role)){
         console.log("this is from unauthorized")
         return res
