@@ -45,14 +45,24 @@ exports.getSingleDoctor = async (req, res) => {
 // Update Doctor
 exports.updateDoctor = async (req, res)=> {
     const doctorId = req.params.id;
+
+    const  {name, ticketPrice} = req.body
+    console.log(req.body)
+    // console.log(typeof(ticketPrice))
     try {
         const doctor = await Doctor.findById(doctorId);
         if(!doctor){
             return res.status(404).json({message:  "doctor not found"})
         }
-        const updateDoctor = await Doctor.findByIdAndUpdate(doctorId, req.body, { new: true })
+        // console.log("doctor details", doctor)
+        
+        /*const updateDoctor = await Doctor.findByIdAndUpdate(doctorId, req.body, { new: true })
 
         return res.status(200).json({success: true, message: "User update successfully", updateDoctor})
+        */
+        return res.status(200).json({success: true, message: "User update successfully", doctor})
+        
+    //    return doctor
     } catch (error) {
         return res.status(401).json({success:  false, message: error.message})
     }

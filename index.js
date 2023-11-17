@@ -11,6 +11,7 @@ const authRouter = require("./Routes/authRoutes");
 const userRouter = require('./Routes/userRoute');
 const doctorRouter = require('./Routes/doctorRoute');
 const reviewRouter = require('./Routes/reviewRouter');
+const paymentRoute = require('./Routes/paymentRoute');
 
 
 
@@ -31,6 +32,7 @@ app.use("/api/v1/auth", authRouter)
 app.use("/api/v1/users", userRouter)
 app.use("/api/v1/doctors", doctorRouter)
 app.use("/api/v1/reviews", reviewRouter)
+app.use("/api/v1/create-checkout-session", paymentRoute)
 app.use(bodyParser.json())
 
 

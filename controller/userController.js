@@ -28,7 +28,7 @@ exports.getSingleUser = async (req, res) => {
 exports.updateUser = async (req, res)=> {
     const userId = req.params.id;   
      
-    const {password, ...rest} = req.body
+    const {password, photo, ...rest} = req.body
     try {
         const user = await User.findById(userId);      
         
@@ -37,22 +37,31 @@ exports.updateUser = async (req, res)=> {
             return res.status(404).json({message:  "User not found"})
         }
 
+        let updatedUser;
+
         if(password){        
             bcrypt.hash(password, 10, async (err, hash)=>{
+               
                 if(err){
                     return res.status(500).json({message: "Error Hashing Password"});
                 }
+                if(!photo){
+                    updatedUser = await User.findByIdAndUpdate(userId, {...rest, password: hash}, { new: true }).select("-password")
+                }
                 // convert user password to bcrypt password                                      
-                const updateUser = await User.findByIdAndUpdate(userId, {...rest, password: hash}, { new: true }).select("-password")
+                updatedUser = await User.findByIdAndUpdate(userId, {...rest, photo, password: hash}, { new: true }).select("-password")
                 
-                console.log("this is from bcrypt scope", updateUser)
+                console.log("this is from bcrypt scope", updatedUser)
                 return res.status(200).json({success: true, message: "User update successfully", updateUser}) 
             })
-        } else {
-            const updateUser = await User.findByIdAndUpdate(userId, {...rest}, { new: true }).select("-password")
-            console.log("this is from local scope", updateUser)
-                
-            return res.status(200).json({success: true, message: "User update successfully", updateUser}) 
+        }
+        if(!photo){
+            updatedUser = await User.findByIdAndUpdate(userId, {...rest}, { new: true }).select("-password")
+        }
+        else {
+            updatedUser = await User.findByIdAndUpdate(userId, {...rest}, { new: true }).select("-password")
+            console.log("this is from local scope", updatedUser)                
+            return res.status(200).json({success: true, message: "User update successfully", updatedUser}) 
         }                     
     } catch (error) {
         return res.status(401).json({success:  false, message: error.message})

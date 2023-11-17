@@ -15,7 +15,8 @@ doctorRouter.use("/:doctorId/reviews", reviewRouter)
 
 doctorRouter.get("/", getAllDoctors)
 doctorRouter.get("/:id", getSingleDoctor)
-doctorRouter.put("/:id", authenticate, restrict(["doctor"]), updateDoctor)
+// doctorRouter.put("/:id", authenticate, restrict(["doctor"]), updateDoctor)
+doctorRouter.put("/:id", updateDoctor)
 doctorRouter.delete("/:id", authenticate, restrict(["doctor"]), deleteDoctor)
 
 doctorRouter.get('/profile/me', authenticate, restrict(["doctor"]), doctorProfile)

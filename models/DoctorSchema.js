@@ -1,9 +1,9 @@
 const mongoose = require("mongoose")
 
 const DoctorSchema = new  mongoose.Schema({
-    email: {type: String, required: true, unique: true},
+    email: {type: String, required: true, unique: true, trim: true},
     password: {type: String, required: true},
-    name: {type: String, required: true},
+    name: {type: String, required: true, trim: true},
     phone: {type: String},
     photo: {type: String},
     ticketPrice: {type: Number},
@@ -20,8 +20,8 @@ const DoctorSchema = new  mongoose.Schema({
     experience: {
         type: Array,
     },
-    bio: {type: String, maxLength: 50},
-    about: {type: String},
+    bio: {type: String, maxLength: 50, trim: true},
+    about: {type: String, trim: true},
     timeSlots: {type: Array},
     reviews: [{type: mongoose.Types.ObjectId, ref:  "Review"}],
     averageRating:  {
