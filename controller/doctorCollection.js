@@ -3,6 +3,7 @@ const Doctor = require("../models/DoctorSchema")
 // Get all Doctor
 
 exports.getAllDoctors = async (req, res) => {
+    console.log(req.headers)
     try {
         const {query} = req.query;
         let doctors;

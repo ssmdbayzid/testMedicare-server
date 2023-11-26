@@ -11,14 +11,11 @@ exports.authenticate = async (req, res, next)  =>{
     }
     try {
         const  token = authToken.split(" ")[1];
-
         // verify token    
-        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY)       
+        const decoded = jwt.verify(token, process.env.ACCESS_TOKEN)       
         
-
         req.userId = decoded.id;
-        req.role = decoded.role;
-        
+        req.role = decoded.role;        
         next()
     } catch (error) {
         if(error.name === "TokenExpiredError"){

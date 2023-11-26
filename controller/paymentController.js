@@ -1,9 +1,10 @@
 const stripe = require("stripe")("sk_test_51ODQzkSE1wNzm1KdnByaieqzJBTs0knlCmANiqspGUuUvzNv81ECbBjM46sP7iLqXRVRozAhzTme83QG58MoaG7c00D7V5LKre")
 exports.checkOut = async (req, res) =>{
     console.log("this is from payment controller", req.body)  
-    const {specializition, ticketPrice, name}  = req.body;
+    
+    // const {specializition, ticketPrice, name, photo}  = req.body;
     try {
-         
+         /*
     const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
         line_items:[{
@@ -27,9 +28,9 @@ exports.checkOut = async (req, res) =>{
     })
     res
     .status(200).json({message: "success", id:session.id})
-    
-//    res
-//     .status(200).json({message: "success"})
+    */
+   res
+    .status(200).json({message: "success"})
     } catch (error) {
         res
         .status(500).json({success:false, message: error.message})

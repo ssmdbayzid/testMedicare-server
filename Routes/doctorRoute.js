@@ -13,8 +13,8 @@ const doctorRouter = require("express").Router()
 // Nasted Route 
 doctorRouter.use("/:doctorId/reviews", reviewRouter)
 
-doctorRouter.get("/", getAllDoctors)
-doctorRouter.get("/:id", getSingleDoctor)
+doctorRouter.get("/", authenticate, getAllDoctors)
+doctorRouter.get("/:id", authenticate, getSingleDoctor)
 // doctorRouter.put("/:id", authenticate, restrict(["doctor"]), updateDoctor)
 doctorRouter.put("/:id", updateDoctor)
 doctorRouter.delete("/:id", authenticate, restrict(["doctor"]), deleteDoctor)
