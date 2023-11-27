@@ -48,6 +48,7 @@ app.get('/', (req, res)=> {
     res.send("medicare server runnning")
 })
 
+
 app.listen(port, ()=> {
     
     console.log(`Server is running with ` + port)
