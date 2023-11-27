@@ -101,7 +101,8 @@ exports.login = async (req, res) => {
        .status(200)
        .json({success: true, message: "Successfully login", accessToken, refreshToken, data: {...rest}, role})
     } catch (error) {
-        res.status(500).json({message: error.message})        
+        console.log(error)
+      return  res.status(500).json({message: error.message})        
     }
 }
 

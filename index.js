@@ -7,22 +7,23 @@ const bodyParser = require("body-parser")
 const dotenv  = require('dotenv');
 dotenv.config();
 
-const jwt = require("jsonwebtoken")
+
 
 const authRouter = require("./Routes/authRoutes");
 const userRouter = require('./Routes/userRoute');
 const doctorRouter = require('./Routes/doctorRoute');
 const reviewRouter = require('./Routes/reviewRouter');
 const paymentRoute = require('./Routes/paymentRoute');
-
-
-
-
 const app = express();
 const port = process.env.PORT || 8000
-const corsOptions = {
-    origin: true,
-}
+
+
+
+
+// const corsOptions = {
+//     origin: true,
+//     Credential: true,
+// }
 
 //* Middleware
 
@@ -30,7 +31,11 @@ const corsOptions = {
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors(corsOptions))
+// app.use(cors({
+//     origin: "http://localhost:3000/",
+//     credentials: true,
+// }))
+app.use(cors())
 app.use(bodyParser.json())
 
 app.use("/api/v1/auth", authRouter)
