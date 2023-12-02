@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken")
 exports.verifyRefreshToken = async (req, res, next) =>{
-    const authToken = req.headers.authorization;
+    const authToken = req.headers.authorization;    
     if(!authToken || !authToken.startsWith("Bearer ")){
         res
         .status(401)

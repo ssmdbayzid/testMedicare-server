@@ -6,7 +6,7 @@ const authRouter = express.Router()
 
 authRouter.post('/register', register)
 authRouter.post('/login', login)
-authRouter.post('/refresh-token', verifyRefreshToken, refreshToken)
+authRouter.get('/refresh-token', verifyRefreshToken, refreshToken)
 // authRouter.post('/refresh-token',  refreshToken)
 
 module.exports = authRouter

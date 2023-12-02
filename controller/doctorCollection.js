@@ -3,7 +3,7 @@ const Doctor = require("../models/DoctorSchema")
 // Get all Doctor
 
 exports.getAllDoctors = async (req, res) => {
-    console.log(req.headers)
+    
     try {
         const {query} = req.query;
         let doctors;
@@ -31,6 +31,8 @@ exports.getAllDoctors = async (req, res) => {
 
 // Get single Doctor
 exports.getSingleDoctor = async (req, res) => {
+    const bearer = req.headers.authorization
+    console.log(bearer)
     const doctorId = req.params.id;
     try {
         const doctor = await Doctor.findById(doctorId)

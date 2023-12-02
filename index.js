@@ -20,10 +20,11 @@ const port = process.env.PORT || 8000
 
 
 
-// const corsOptions = {
-//     origin: true,
-//     Credential: true,
-// }
+const corsOptions ={
+    origin:'http://localhost:3000', 
+    credentials:true,            //access-control-allow-credentials:true
+    optionSuccessStatus:200
+}
 
 //* Middleware
 
@@ -31,11 +32,8 @@ const port = process.env.PORT || 8000
 
 app.use(express.json());
 app.use(cookieParser());
-// app.use(cors({
-//     origin: "http://localhost:3000/",
-//     credentials: true,
-// }))
-app.use(cors())
+
+app.use(cors(corsOptions))
 app.use(bodyParser.json())
 
 app.use("/api/v1/auth", authRouter)

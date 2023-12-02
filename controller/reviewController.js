@@ -15,12 +15,18 @@ exports.createReview = async (req, res) => {
     if(!req.body.doctor) req.body.doctor = req.params.doctorId;
     if(!req.body.user) req.body.user = req.userId;
     
+    
+    const {reviewText, rating}  = req.body
+    
+    
+
     try {
-        const createdReview = await Review.create(req.body);
-        await Doctor.findByIdAndUpdate(req.body.doctor, {
+        const createdReview = await Review.create({reviewText, rating});
+       const doctor = await Doctor.findByIdAndUpdate(req.body.doctor, {
             $push: {reviews: createdReview._id},
         })
-
+        console.log(createdReview)
+        console.log("doctor", doctor)
         return res.status(200)
         .json({success: true,  message: "Review submitted", data: createdReview})
 
