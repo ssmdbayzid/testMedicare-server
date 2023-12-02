@@ -30,9 +30,7 @@ exports.getAllDoctors = async (req, res) => {
 }
 
 // Get single Doctor
-exports.getSingleDoctor = async (req, res) => {
-    const bearer = req.headers.authorization
-    console.log(bearer)
+exports.getSingleDoctor = async (req, res) => {        
     const doctorId = req.params.id;
     try {
         const doctor = await Doctor.findById(doctorId)

@@ -4,7 +4,8 @@ const User = require("../models/UserSchema");
 const bcrypt = require("bcryptjs")
 
 const generateAccessToken = user => {    
-    return jwt.sign({email:user.email, id:user._id, role: user.role}, process.env.ACCESS_TOKEN, {expiresIn: "24h"})    
+    console.log(user)
+    return jwt.sign({email:user.email, id: user._id, role: user.role}, process.env.ACCESS_TOKEN, {expiresIn: "24h"})    
 }
 const generateRefreshToken = user => {    
     return jwt.sign({email:user.email, id:user._id, role: user.role}, process.env.REFRESH_TOKEN, {expiresIn: "7d"})    
