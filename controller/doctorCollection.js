@@ -51,7 +51,7 @@ exports.updateDoctor = async (req, res)=> {
     console.log(req.body)
     // console.log(typeof(ticketPrice))
     try {
-        const doctor = await Doctor.findById(doctorId);
+        const doctor = await Doctor.findById(doctorId).select("-password");
         if(!doctor){
             return res.status(404).json({message:  "doctor not found"})
         }
