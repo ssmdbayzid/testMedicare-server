@@ -1,8 +1,8 @@
-const { checkOut } = require("../controller/paymentController");
+const { checkOut, bookAppointment } = require("../controller/paymentController");
 
 const paymentRoute = require("express").Router()
 // const stripe = require("stripe")
 
-paymentRoute.post("/", checkOut)
+paymentRoute.post("/", bookAppointment)
 
 module.exports = paymentRoute;
