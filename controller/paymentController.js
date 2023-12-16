@@ -5,18 +5,30 @@ const stripe = require("stripe")("sk_test_51ODQzkSE1wNzm1KdnByaieqzJBTs0knlCmANi
 // ================= Book Appointment
 
 exports.bookAppointment = async (req, res)=>{
-    
-    try {
-        console.log(req.body)
-        
-        res
-        .status(200).json({message: "This is from payment system"})
-    } catch (error) {
-        res
-        .status(500)
-        .json({message: "Booking failed, Something wents wrong"})
-    }
+  // const { items } = req.body;
+
+  // Create a PaymentIntent with the order amount and currency
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: 50,
+    currency: "usd",
+    // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
+    automatic_payment_methods: {
+      enabled: true,
+    },
+  });
+
+  res.send({
+    clientSecret: paymentIntent.client_secret,
+  });
 }
+
+
+
+
+
+
+
+
 
 
 exports.checkOut = async (req, res) =>{
