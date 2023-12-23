@@ -1,72 +1,118 @@
-const BookingSchema = require("../models/BookingSchema")
+const BookingSchema = require("../models/BookingSchema");
+const Doctor = require("../models/DoctorSchema");
 
-const stripe = require("stripe")("sk_test_51ODQzkSE1wNzm1KdnByaieqzJBTs0knlCmANiqspGUuUvzNv81ECbBjM46sP7iLqXRVRozAhzTme83QG58MoaG7c00D7V5LKre")
+const stripe2 = require("stripe")("sk_test_51ODQzkSE1wNzm1KdnByaieqzJBTs0knlCmANiqspGUuUvzNv81ECbBjM46sP7iLqXRVRozAhzTme83QG58MoaG7c00D7V5LKre")
 
 // ================= Book Appointment
 
 exports.bookAppointment = async (req, res)=>{
-  // const { items } = req.body;
-
-  // Create a PaymentIntent with the order amount and currency
-  const paymentIntent = await stripe.paymentIntents.create({
-    amount: 50,
-    currency: "usd",
-    // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
-    automatic_payment_methods: {
-      enabled: true,
-    },
-  });
-
-  res.send({
-    clientSecret: paymentIntent.client_secret,
-  });
+    console.log(req.body)
+ return res.status(200).json({message: req.body});
 }
 
-
-
-
-
-
-
-
-
+//  Booking An Appointment
+const booking =  async (customer, data) =>{
+  const newAppointment = {
+    doctor: customer.metadata.doctorId,
+    user: customer.metadata.userId,
+    ticketPrice: data.amount_total,
+    appointmentDate: customer.metadata.appointmentDate,
+    time: customer.metadata.time,
+    isPaid: data.payment_status
+  }
+  console.log(newAppointment)
+}
 
 exports.checkOut = async (req, res) =>{
-    console.log("this is from payment controller", req.body)  
-    
-    // const {specializition, ticketPrice, name, photo}  = req.body;
+    // Create Customer 
+    // console.log("checkout ", req.body)
+
+    // res.send({message: "this is from checkout"})
+    // /*
+
+    const customer  = await stripe2.customers.create({
+      metadata: {
+        user: req.body.userId,
+        doctor: req.doctorId,                
+        appointmentDate: req.body.date,
+        time: req.body.time,        
+      }
+    })
+    const doctor = await Doctor.findById(req.body.doctorId)
     try {
-          
-    const session = await stripe.checkout.sessions.create({
+    
+    const session = await stripe2.checkout.sessions.create({
         payment_method_types: ["card"],
         line_items:[{
             price_data: {
-                currency: "bdt",
-                name:"Doctor Appointment",
+                currency: "bdt",                
                 product_data: {
-                    name: specializition,
-                    doctor_name: name,
-                    doctor_photo: photo,
-                    ticket_price: ticketPrice.toString()
+                    name: doctor?.specialization,
+                    images: [doctor?.photo],
+                    metadata: {
+                      id: doctor?._id,
+                    }
                 },
-                unit_amount: ticketPrice,
+                unit_amount: doctor?.ticketPrice,
             },
             quantity: 1,
         }
         ],
         mode: "payment",
-        success_url: "http://localhost:3000/success",
-        cancel_url: "http://localhost:3000/cancel",
+        customer: customer.id,
+        success_url: "http://localhost:3000/payment-success",
+        cancel_url: "http://localhost:3000/payment-cancel",
     })
     res
-    .status(200).json({message: "success", id:session.id})
+    .status(200).json({url: session.url})
+    }
     
-   res
-    .status(200).json({message: "success"})
-    } catch (error) {
+   
+     catch (error) {
         res
         .status(500).json({success:false, message: error.message})
         console.log(error.message)
     }
+    
    
+}
+// WebHook Endpoint Secret
+const endpointSecret = "whsec_428cdddc66a46394b3a5317becd8a621189a265056e8f99fbffe78dd4f0de34a";
+exports.webHook = async (req, res, stripe) => {
+  const sig = req.headers['stripe-signature'];
+
+  let data;
+  let eventType;
+
+  let event
+  if(endpointSecret){
+    try {
+      event = stripe.webhooks.constructEvent(req.rawBody, sig, endpointSecret);
+    console.log("this is webhook")
+    } catch (error) {
+      console.log("error from webhook")
+      console.log(error.message)
+      return;
+    }
+    data = event.data.object
+    eventType = req.body.type
+  }else{
+    data = event.data.object
+    eventType = req.body.type
+  }
+
+  if(eventType ===  "checkout.session.completed"){
+    
+    stripe.customers
+    .retrieve(data.customer)
+    .then((customer, data)=>{
+      console.log("customer ---: ", customer)
+      console.log("data ---: ", data)
+      // booking(customer, data)
+    })
+    .then(error => console.log(error.message))
+    
+  }
+
+  res.send().end()
 }
