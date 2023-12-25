@@ -27,8 +27,7 @@ app.use(
     // Let's compute it only when hitting the Stripe webhook endpoint.
     verify: function (req, res, buf) {
       if (req.originalUrl.startsWith('/api/v1/book-appointment/webhook')) {
-        req.rawBody = buf.toString();
-        console.log("raebody", buf)
+        req.rawBody = buf.toString();        
       }
     },
   })
@@ -64,3 +63,16 @@ app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
   connectDB();
 });
+
+
+/*
+
+PORT=5000
+MONGO_URL = mongodb+srv://medicare:k8OPP6YNT8CzZsG0@cluster0.al92jf4.mongodb.net/?retryWrites=true&w=majority
+ACCESS_TOKEN=n7yfRMo/ujHfBWSF2VFdevG4WRbBoG9Fqwu51+/9ZBUV6Qo88YG7IbcEaIer+g+OgjMv4RyNQ6/67a
+F5xWmkOR3oA6J6bdAJ1pbstTuhIfItF1PQfP26YXk1QlaoKy/YJxPUngyK4kNG9O04aret4D+2qIq9
+BUaQcv+R9Xi014VKNUDZ+YQKEaLHBhJMq6JgehJ56iNbdNJ4+PN7SQwjNdZ8gS76izAwYsSZ7Kuyx2
+REFRESH_TOKEN=F5xWmkOR3oA6J6bdAJ1pbstTuhIfItF1PQfP26YXk1QlaoKy/YJxPUngyK4kNG9O04aret4D+2qIq9
+BUaQcv+R9Xi014VKNUDZ+YQKEaLHBhJMq6JgehJ56iNbdNJ4+PN7SQwjNdZ8gS76izAwYsSZ7Kuyx2
+
+*/

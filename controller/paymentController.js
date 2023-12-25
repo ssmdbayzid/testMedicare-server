@@ -13,8 +13,8 @@ const stripe = require("stripe")("sk_test_51ODQzkSE1wNzm1KdnByaieqzJBTs0knlCmANi
 //  Booking An Appointment
 const bookAppointment =  async (customer, data) =>{
   const newAppointment = {
-    doctor: customer.metadata.doctorId,
-    user: customer.metadata.userId,
+    user: customer.metadata.user,
+    doctor: customer.metadata.doctor,
     ticketPrice: data.amount_total,
     appointmentDate: customer.metadata.appointmentDate,
     time: customer.metadata.time,
@@ -33,7 +33,7 @@ exports.checkOut = async (req, res) =>{
     const customer  = await stripe.customers.create({
       metadata: {
         user: req.body.userId,
-        doctor: req.doctorId,                
+        doctor: req.body.doctorId,                
         appointmentDate: req.body.date,
         time: req.body.time,        
       }
