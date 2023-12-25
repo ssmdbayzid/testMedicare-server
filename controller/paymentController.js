@@ -5,13 +5,13 @@ const stripe = require("stripe")("sk_test_51ODQzkSE1wNzm1KdnByaieqzJBTs0knlCmANi
 
 // ================= Book Appointment
 
-exports.bookAppointment = async (req, res)=>{
-    console.log(req.body)
- return res.status(200).json({message: req.body});
-}
+// const bookAppointment = async (req, res)=>{
+//     console.log(req.body)
+//  return res.status(200).json({message: req.body});
+// }
 
 //  Booking An Appointment
-const booking =  async (customer, data) =>{
+const bookAppointment =  async (customer, data) =>{
   const newAppointment = {
     doctor: customer.metadata.doctorId,
     user: customer.metadata.userId,
@@ -20,7 +20,7 @@ const booking =  async (customer, data) =>{
     time: customer.metadata.time,
     isPaid: data.payment_status
   }
-  console.log(newAppointment)
+  console.log("new Appoitment",  newAppointment)
 }
 
 exports.checkOut = async (req, res) =>{
@@ -106,12 +106,12 @@ exports.webHook = async (req, res) => {
     
     stripe.customers
     .retrieve(data.customer)
-    .then((customer, data)=>{
-      console.log("customer ---: ", customer)
-      console.log("data ---: ", data)
-      // booking(customer, data)
+    .then((customer)=>{
+      // console.log("customer ---: ", customer)
+      // console.log("data ---: ", data)
+      bookAppointment(customer, data)
     })
-    .then(error => console.log("error message", error.message))
+    .catch(error => console.log("error message", error))
     
   }
 
