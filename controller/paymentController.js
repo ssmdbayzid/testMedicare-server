@@ -1,7 +1,7 @@
 const BookingSchema = require("../models/BookingSchema");
 const Doctor = require("../models/DoctorSchema");
 
-const stripe2 = require("stripe")("sk_test_51ODQzkSE1wNzm1KdnByaieqzJBTs0knlCmANiqspGUuUvzNv81ECbBjM46sP7iLqXRVRozAhzTme83QG58MoaG7c00D7V5LKre")
+const stripe = require("stripe")("sk_test_51ODQzkSE1wNzm1KdnByaieqzJBTs0knlCmANiqspGUuUvzNv81ECbBjM46sP7iLqXRVRozAhzTme83QG58MoaG7c00D7V5LKre")
 
 // ================= Book Appointment
 
@@ -30,7 +30,7 @@ exports.checkOut = async (req, res) =>{
     // res.send({message: "this is from checkout"})
     // /*
 
-    const customer  = await stripe2.customers.create({
+    const customer  = await stripe.customers.create({
       metadata: {
         user: req.body.userId,
         doctor: req.doctorId,                
@@ -41,7 +41,7 @@ exports.checkOut = async (req, res) =>{
     const doctor = await Doctor.findById(req.body.doctorId)
     try {
     
-    const session = await stripe2.checkout.sessions.create({
+    const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
         line_items:[{
             price_data: {
@@ -77,8 +77,9 @@ exports.checkOut = async (req, res) =>{
    
 }
 // WebHook Endpoint Secret
-const endpointSecret = "whsec_428cdddc66a46394b3a5317becd8a621189a265056e8f99fbffe78dd4f0de34a";
-exports.webHook = async (req, res, stripe) => {
+let endpointSecret;
+endpointSecret = "whsec_428cdddc66a46394b3a5317becd8a621189a265056e8f99fbffe78dd4f0de34a";
+exports.webHook = async (req, res) => {
   const sig = req.headers['stripe-signature'];
 
   let data;
@@ -110,7 +111,7 @@ exports.webHook = async (req, res, stripe) => {
       console.log("data ---: ", data)
       // booking(customer, data)
     })
-    .then(error => console.log(error.message))
+    .then(error => console.log("error message", error.message))
     
   }
 

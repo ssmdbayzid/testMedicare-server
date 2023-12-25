@@ -21,7 +21,18 @@ const corsOptions ={
   optionSuccessStatus:200
 }
 
-
+app.use(
+  express.json({
+    // We need the raw body to verify webhook signatures.
+    // Let's compute it only when hitting the Stripe webhook endpoint.
+    verify: function (req, res, buf) {
+      if (req.originalUrl.startsWith('/api/v1/book-appointment/webhook')) {
+        req.rawBody = buf.toString();
+        console.log("raebody", buf)
+      }
+    },
+  })
+);
 
 //* Middleware
 

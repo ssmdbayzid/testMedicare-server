@@ -1,23 +1,19 @@
 
-const express = require("express")
-const Doctor = require("../models/DoctorSchema")
-// const bodyParser = require("body-parser")
+
 const appointmentRoute = require("express").Router()
 
+const { checkOut, webHook } = require("../controller/paymentController")
+
+appointmentRoute.post("/", checkOut)
+appointmentRoute.post('webhook', webHook)
+
+module.exports = appointmentRoute;
+/*
+
+const Doctor = require("../models/DoctorSchema")
 const stripe = require("stripe")("sk_test_51ODQzkSE1wNzm1KdnByaieqzJBTs0knlCmANiqspGUuUvzNv81ECbBjM46sP7iLqXRVRozAhzTme83QG58MoaG7c00D7V5LKre")
 
 
-// appointmentRoute.use(
-//     bodyParser.json({
-//         verify: function(req, res, buf) {
-//             req.rawBody = buf;
-//         }
-//     })
-//   );
-//   //* Middleware
-  
-//   appointmentRoute.use(bodyParser.json());
-  
 
   // payment Route
   appointmentRoute.post('/', async (req, res)=>{
@@ -77,7 +73,7 @@ appointmentRoute.post(
   
       try {
         const event = stripe.webhooks.constructEvent(
-          req.body,
+          req.rawBody,
           sig,
           endpointSecret
         );
@@ -107,3 +103,4 @@ appointmentRoute.post(
   
 
 module.exports = appointmentRoute
+*/
