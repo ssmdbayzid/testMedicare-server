@@ -11,6 +11,7 @@ const doctorRouter = require('./Routes/doctorRoute');
 const reviewRouter = require('./Routes/reviewRouter');
 // const paymentRoute = require('./Routes/paymentRoute');
 const appointmentRoute = require('./Routes/paymentRoute');
+const bookingRoute = require('./Routes/bookingRoute');
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -48,6 +49,7 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/doctors", doctorRouter);
 app.use("/api/v1/reviews", reviewRouter);
 app.use("/api/v1/book-appointment", appointmentRoute);
+app.use("/api/v1/booking", bookingRoute);
 
 
 
