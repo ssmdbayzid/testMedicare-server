@@ -1,5 +1,6 @@
 const Booking = require("../models/BookingSchema");
 const Doctor = require("../models/DoctorSchema");
+const User = require("../models/UserSchema");
 
 const stripe = require("stripe")("sk_test_51ODQzkSE1wNzm1KdnByaieqzJBTs0knlCmANiqspGUuUvzNv81ECbBjM46sP7iLqXRVRozAhzTme83QG58MoaG7c00D7V5LKre")
 
@@ -21,10 +22,21 @@ const bookAppointment =  async (customer, data) =>{
     isPaid: data.payment_status
   }
   try {
-    const result = new Booking(newAppointment)
-    await result.save()
-    console.log(result)
-   return res.status(200).message({success: true, data: result})
+    const newBooking = new Booking(newAppointment)
+    const booking = await newBooking.save()
+    await User.updateOne({_id:customer.metadata.user}, {
+      $push: {
+        appointment: booking._id,
+      }
+    })
+    await Doctor.updateOne({_id:customer.metadata.user}, {
+      $push: {
+        appointment: booking._id,
+      }
+    })
+
+
+   return res.status(200).message({success: true, data: booking})
   } catch (error) {
    return console.log("booking error", error.message)
   }  

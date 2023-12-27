@@ -13,7 +13,7 @@ const UserSchema = new mongoose.Schema({
     },
     gender: {type: String, enum: ["male", "female", "other"]},
     bloodType: {type: String, enum: ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"]},
-    appointment: [{type: mongoose.Types.ObjectId, ref: "Appointment"}],
+    appointment: [{type: mongoose.Types.ObjectId, ref: "Booking"}],
 })
 
 module.exports = mongoose.model("User", UserSchema)
