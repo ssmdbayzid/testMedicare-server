@@ -57,12 +57,10 @@ exports.updateDoctor = async (req, res)=> {
         }
         // console.log("doctor details", doctor)
         
-        /*const updateDoctor = await Doctor.findByIdAndUpdate(doctorId, req.body, { new: true })
+        const updateDoctor = await Doctor.findByIdAndUpdate(doctorId, req.body, { new: true })
 
         return res.status(200).json({success: true, message: "User update successfully", updateDoctor})
-        */
-        return res.status(200).json({success: true, message: "User update successfully", doctor})
-        
+                       
     //    return doctor
     } catch (error) {
         return res.status(401).json({success:  false, message: error.message})

@@ -22,7 +22,7 @@ const DoctorSchema = new  mongoose.Schema({
     },
     bio: {type: String, maxLength: 50, trim: true},
     about: {type: String, trim: true},
-    availableTime: {type: Array},
+    availableTime: {type: Object},
     reviews: [{type: mongoose.Types.ObjectId, ref:  "Review"}],
     averageRating:  {
         type: Number,

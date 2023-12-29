@@ -17,7 +17,14 @@ exports.getSingleUser = async (req, res) => {
     const userId = req.params.id;
     try {
         const user = await User.findById(userId)
-        .populate("appointment")
+        .populate({
+            path: "appointment",
+            populate: {
+                path: "doctor",
+                model: "Doctor",                    
+                    select: "name photo specialization averageRating totalRating"
+            }
+        })
         .select("-password")
 
 

@@ -74,10 +74,8 @@ exports.login = async (req, res) => {
     console.log(req.body)
     try {
         let user = null;        
-        const patient = await User.findOne({email})
-        .populate("appointment", '-user')
-        const doctor  = await Doctor.findOne({email})
-        .populate("appointment", '-doctor')
+        const patient = await User.findOne({email})        
+        const doctor  = await Doctor.findOne({email})        
 
 
         if(patient ||  doctor){
