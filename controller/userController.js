@@ -16,7 +16,10 @@ exports.getAllUser = async (req, res) => {
 exports.getSingleUser = async (req, res) => {
     const userId = req.params.id;
     try {
-        const user = await User.findById(userId).select("-password")
+        const user = await User.findById(userId)
+        .populate("appointment")
+        .select("-password")
+
 
         return res.status(200).json({success: true, message: "User Found", data: user})
     } catch (error) {
@@ -86,7 +89,7 @@ exports.getUserProfile = async (req, res) =>{
     const userId = req.userId;
 
     try {
-        const user = await User.findById(userId);
+        const user = await User.findById(userId).populate("appointment");
 
         if(!user){
             return res

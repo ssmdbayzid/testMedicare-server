@@ -2,9 +2,10 @@
 
 const appointmentRoute = require("express").Router()
 
-const { checkOut, webHook } = require("../controller/paymentController")
+const { checkOut, webHook, booking, bookingFailed } = require("../controller/paymentController")
 
 appointmentRoute.post("/", checkOut)
-appointmentRoute.post('/webhook', webHook)
+appointmentRoute.post("/success/:id", booking)
+appointmentRoute.post("/failed/:id", bookingFailed)
 
 module.exports = appointmentRoute;

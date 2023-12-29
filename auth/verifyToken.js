@@ -42,7 +42,7 @@ exports.restrict = roles => async  (req, res, next) => {
         user = (patient || doctor)
     }
     
-    if(!roles.includes(user.role)){
+    if(!roles.includes(req.role)){
         console.log("this is from unauthorized")
         return res
         .status(401)        

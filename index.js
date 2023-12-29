@@ -12,6 +12,8 @@ const reviewRouter = require('./Routes/reviewRouter');
 // const paymentRoute = require('./Routes/paymentRoute');
 const appointmentRoute = require('./Routes/paymentRoute');
 const bookingRoute = require('./Routes/bookingRoute');
+const stripe = require("stripe")
+stripe.api_key =("sk_test_51ODQzkSE1wNzm1KdnByaieqzJBTs0knlCmANiqspGUuUvzNv81ECbBjM46sP7iLqXRVRozAhzTme83QG58MoaG7c00D7V5LKre")
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -22,17 +24,6 @@ const corsOptions ={
   optionSuccessStatus:200
 }
 
-app.use(
-  express.json({
-    // We need the raw body to verify webhook signatures.
-    // Let's compute it only when hitting the Stripe webhook endpoint.
-    verify: function (req, res, buf) {
-      if (req.originalUrl.startsWith('/api/v1/book-appointment/webhook')) {
-        req.rawBody = buf.toString();        
-      }
-    },
-  })
-);
 
 //* Middleware
 
@@ -55,6 +46,9 @@ app.use("/api/v1/booking", bookingRoute);
 
 //  web hook func ---------------------------
 // controllers/webhookController.js
+
+
+
 
 
 app.get('/', (req, res) => {

@@ -74,8 +74,11 @@ exports.login = async (req, res) => {
     console.log(req.body)
     try {
         let user = null;        
-        const patient = await User.findOne({email});
-        const doctor  = await Doctor.findOne({email});
+        const patient = await User.findOne({email})
+        .populate("appointment", '-user')
+        const doctor  = await Doctor.findOne({email})
+        .populate("appointment", '-doctor')
+
 
         if(patient ||  doctor){
             user = patient || doctor
@@ -92,7 +95,7 @@ exports.login = async (req, res) => {
         }
         const accessToken = generateAccessToken(user)
         const refreshToken = generateRefreshToken(user)        
-        const {password, role, appointment, ...rest} = user._doc;       
+        const {password, role,  ...rest} = user._doc;       
 
        return res
        .status(200)
