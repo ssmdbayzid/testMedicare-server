@@ -4,7 +4,8 @@ const { getSingleUser, getAllUser, updateUser, deleteUser, getUserProfile, getMy
 const userRouter = require("express").Router()
 
 
-userRouter.get("/", authenticate, restrict(["parun devtient"]), getAllUser)
+// userRouter.get("/", authenticate, restrict(["admin"]), getAllUser)
+userRouter.get("/",  getAllUser)
 userRouter.get("/:id", authenticate, restrict(["patient"]), getSingleUser)
 userRouter.get("/profile/me", authenticate, restrict(["patient"]), getUserProfile)
 userRouter.get("/appointment/my-appointments", authenticate, restrict(["patient"]), getMyAppointment)

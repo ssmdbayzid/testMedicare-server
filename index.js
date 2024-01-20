@@ -12,8 +12,6 @@ const reviewRouter = require('./Routes/reviewRouter');
 // const paymentRoute = require('./Routes/paymentRoute');
 const appointmentRoute = require('./Routes/paymentRoute');
 const bookingRoute = require('./Routes/bookingRoute');
-const stripe = require("stripe")
-stripe.api_key =("sk_test_51ODQzkSE1wNzm1KdnByaieqzJBTs0knlCmANiqspGUuUvzNv81ECbBjM46sP7iLqXRVRozAhzTme83QG58MoaG7c00D7V5LKre")
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -24,15 +22,12 @@ const corsOptions ={
   optionSuccessStatus:200
 }
 
-
 //* Middleware
-
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(cors(corsOptions))
-
 
 // Define routes after setting up CORS middleware
 app.use("/api/v1/auth", authRouter);
@@ -43,13 +38,8 @@ app.use("/api/v1/book-appointment", appointmentRoute);
 app.use("/api/v1/booking", bookingRoute);
 
 
-
 //  web hook func ---------------------------
 // controllers/webhookController.js
-
-
-
-
 
 app.get('/', (req, res) => {
   res.send("medicare server running");

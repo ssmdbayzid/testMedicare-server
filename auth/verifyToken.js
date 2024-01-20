@@ -12,8 +12,7 @@ exports.authenticate = async (req, res, next)  =>{
     try {
         const  token = authToken.split(" ")[1];
         // verify token    
-        const decoded = jwt.verify(token, process.env.ACCESS_TOKEN)       
-        console.log(decoded)
+        const decoded = jwt.verify(token, process.env.ACCESS_TOKEN)               
 
         req.userId = decoded.id;
         req.role = decoded.role;        
@@ -30,10 +29,7 @@ exports.authenticate = async (req, res, next)  =>{
 // Restrict 
 
 exports.restrict = roles => async  (req, res, next) => {
-    const userId = req.userId;
-
-    console.log(userId)
-       
+    const userId = req.userId;          
     let user;
     const patient = await User.findById(userId);
     const doctor = await Doctor.findById(userId);

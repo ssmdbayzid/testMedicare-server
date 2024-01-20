@@ -3,10 +3,9 @@ const Doctor = require("../models/DoctorSchema")
 // Get all Doctor
 
 exports.getAllDoctors = async (req, res) => {
-    
-    try {
-        const {query} = req.query;
-        let doctors;
+
+    try {        
+        // let doctors;
         /*
         if(query){
             doctors = await Doctor.find({
@@ -21,8 +20,8 @@ exports.getAllDoctors = async (req, res) => {
         doctors = await Doctor.find({isApproved: "approved"})
         .select("-password");
         }*/
-        doctors = await Doctor.find()
-        .select("-password");
+       const doctors = await Doctor.find()        
+        .select("-password");        
         return res.status(200).json({success: true, data: doctors})
     } catch (error) {
         return res.status(404).json({success: false,  message: "Not found"})
@@ -32,10 +31,12 @@ exports.getAllDoctors = async (req, res) => {
 // Get single Doctor
 exports.getSingleDoctor = async (req, res) => {        
     const doctorId = req.params.id;
+    console.log(doctorId)
     try {
-        const doctor = await Doctor.findById(doctorId)
+        const doctor = await Doctor.findById({_id: doctorId})        
         .populate("reviews")
         .select("-password")
+        
 
         return res.status(200).json({success: true, message: "Doctor Found", data: doctor})
     } catch (error) {
@@ -46,9 +47,7 @@ exports.getSingleDoctor = async (req, res) => {
 // Update Doctor
 exports.updateDoctor = async (req, res)=> {
     const doctorId = req.params.id;
-
-    const  {name, ticketPrice} = req.body
-    console.log(req.body)
+    const  {name, ticketPrice} = req.body    
     // console.log(typeof(ticketPrice))
     try {
         const doctor = await Doctor.findById(doctorId).select("-password");
