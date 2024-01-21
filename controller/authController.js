@@ -71,7 +71,7 @@ exports.register = async (req, res) => {
 }
 exports.login = async (req, res) => {
     const {email, password} = req.body;    
-    console.log(req.body)
+    
     try {
         let user = null;        
         const patient = await User.findOne({email})        

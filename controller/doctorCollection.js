@@ -35,6 +35,14 @@ exports.getSingleDoctor = async (req, res) => {
     try {
         const doctor = await Doctor.findById({_id: doctorId})        
         .populate("reviews")
+        .populate({
+            path: "appointments",
+            populate: {
+                path: "user",
+                model: "User",
+                select: "name, photo, gender email"
+            }
+        })
         .select("-password")
         
 
@@ -81,9 +89,18 @@ try {
 // get Doctor profile
 
 exports.doctorProfile = async (req, res) =>{
-    const doctorId = req.doctorId;
+    const doctorId = req.params.id;
     try {
         const doctor = await Doctor.findById(doctorId)
+        .populate({
+            path: "appointments",
+            populate: {
+                path: "user",
+                model: "User",
+                select: "name photo gender email"
+            }
+        })
+        .select("-password")
         if(!doctor){
             return res
             .status(404)

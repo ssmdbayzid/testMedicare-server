@@ -1,7 +1,7 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-const connectDB = require("./config/connectDB");
+// const connectDB = require("./config/connectDB");
 const bodyParser = require("body-parser");
 const dotenv = require('dotenv');
 dotenv.config();
@@ -12,12 +12,12 @@ const reviewRouter = require('./Routes/reviewRouter');
 // const paymentRoute = require('./Routes/paymentRoute');
 const appointmentRoute = require('./Routes/paymentRoute');
 const bookingRoute = require('./Routes/bookingRoute');
-
+const mongoose = require("mongoose")
 const app = express();
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 5000;
 
 const corsOptions ={
-  origin:'http://localhost:3000', 
+  origin: "*", 
   credentials:true,            //access-control-allow-credentials:true
   optionSuccessStatus:200
 }
@@ -29,13 +29,28 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(cors(corsOptions))
 
+const connectDatabase = async ()=> {
+  try {
+    await mongoose.connect(process.env.MONGO_URL)
+    console.log("Mongodbb Database connected")
+  } catch (error) {
+    
+    console.log(error.message, "MongoDB database is connection failed")
+  }
+}
+
+connectDatabase().catch(err=> console.log(err))
+
+
+
+
 // Define routes after setting up CORS middleware
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/doctors", doctorRouter);
 app.use("/api/v1/reviews", reviewRouter);
 app.use("/api/v1/book-appointment", appointmentRoute);
-app.use("/api/v1/booking", bookingRoute);
+app.use("/api/v1/appointments", bookingRoute);
 
 
 //  web hook func ---------------------------
@@ -47,7 +62,7 @@ app.get('/', (req, res) => {
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
-  connectDB();
+  // connectDB();
 });
 
 
@@ -62,3 +77,6 @@ REFRESH_TOKEN=F5xWmkOR3oA6J6bdAJ1pbstTuhIfItF1PQfP26YXk1QlaoKy/YJxPUngyK4kNG9O04
 BUaQcv+R9Xi014VKNUDZ+YQKEaLHBhJMq6JgehJ56iNbdNJ4+PN7SQwjNdZ8gS76izAwYsSZ7Kuyx2
 
 */
+
+
+// https://medicare-server-ashy.vercel.app/api/v1/doctors

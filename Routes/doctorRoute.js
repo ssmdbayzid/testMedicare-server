@@ -14,11 +14,11 @@ const doctorRouter = require("express").Router()
 doctorRouter.use("/:doctorId/reviews", reviewRouter)
 
 doctorRouter.get("/",  getAllDoctors)
-// doctorRouter.get("/:id", authenticate, getSingleDoctor)
+
 doctorRouter.get("/:id", getSingleDoctor)
-// doctorRouter.put("/:id", authenticate, restrict(["doctor"]), updateDoctor)
 doctorRouter.put("/:id", updateDoctor)
 doctorRouter.delete("/:id", authenticate, restrict(["doctor"]), deleteDoctor)
 
-doctorRouter.get('/profile/me', authenticate, restrict(["doctor"]), doctorProfile)
+doctorRouter.get('/profile/:id', authenticate,  restrict(["doctor"]), doctorProfile)
+// doctorRouter.get('/profile/:id', authenticate, restrict(["doctor"]), doctorProfile)
 module.exports = doctorRouter;

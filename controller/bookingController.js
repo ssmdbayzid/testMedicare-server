@@ -3,8 +3,8 @@ const Booking = require("../models/BookingSchema")
 exports.getAllBooking = async (req, res)=>{
     try {
         const data = await Booking.find()
-        // .populate('user', '-password') 
-        // .populate('doctor', '-password')
+        .populate('user', '-password') 
+        .populate('doctor', '-password')
         return res
         .status(200)
         .json({message: "This is from get all booking", data})        
@@ -20,7 +20,7 @@ exports.getUserBooking = async (req, res) =>{
 
     try {            
         const data = await Booking.find(user)
-        console.log(data)
+        
 
     return res
     .status(200)
