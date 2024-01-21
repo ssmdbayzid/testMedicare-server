@@ -16,11 +16,11 @@ const mongoose = require("mongoose")
 const app = express();
 const port = process.env.PORT || 5000;
 
-const corsOptions ={
-  origin: "*", 
-  credentials:true,            //access-control-allow-credentials:true
-  optionSuccessStatus:200
-}
+const corsOptions = {
+  origin: "https://medicare-817a0.web.app",
+  credentials: true,
+  optionSuccessStatus: 200
+};
 
 //* Middleware
 
@@ -66,17 +66,3 @@ app.listen(port, () => {
 });
 
 
-/*
-
-PORT=5000
-MONGO_URL = mongodb+srv://medicare:k8OPP6YNT8CzZsG0@cluster0.al92jf4.mongodb.net/?retryWrites=true&w=majority
-ACCESS_TOKEN=n7yfRMo/ujHfBWSF2VFdevG4WRbBoG9Fqwu51+/9ZBUV6Qo88YG7IbcEaIer+g+OgjMv4RyNQ6/67a
-F5xWmkOR3oA6J6bdAJ1pbstTuhIfItF1PQfP26YXk1QlaoKy/YJxPUngyK4kNG9O04aret4D+2qIq9
-BUaQcv+R9Xi014VKNUDZ+YQKEaLHBhJMq6JgehJ56iNbdNJ4+PN7SQwjNdZ8gS76izAwYsSZ7Kuyx2
-REFRESH_TOKEN=F5xWmkOR3oA6J6bdAJ1pbstTuhIfItF1PQfP26YXk1QlaoKy/YJxPUngyK4kNG9O04aret4D+2qIq9
-BUaQcv+R9Xi014VKNUDZ+YQKEaLHBhJMq6JgehJ56iNbdNJ4+PN7SQwjNdZ8gS76izAwYsSZ7Kuyx2
-
-*/
-
-
-// https://medicare-server-ashy.vercel.app/api/v1/doctors

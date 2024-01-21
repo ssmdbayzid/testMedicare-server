@@ -28,10 +28,10 @@ exports.checkOut = async (req, res) =>{
       total_amount: doctor?.ticketPrice,
       currency: 'BDT',
       tran_id: tran_id, // use unique tran_id for each api call
-      success_url: `http://localhost:5000/api/v1/book-appointment/success/${tran_id}`,
-      fail_url: `http://localhost:5000/api/v1/book-appointment/failed/${tran_id}`,
-      cancel_url: 'http://localhost:3000/payment-cancel',
-      ipn_url: 'http://localhost:3000/ipn',
+      success_url: `https://medicare-server-ashy.vercel.app/api/v1/book-appointment/success/${tran_id}`,
+      fail_url: `https://medicare-server-ashy.vercel.app/api/v1/book-appointment/failed/${tran_id}`,
+      cancel_url: 'https://medicare-server-ashy.vercel.app/api/v1/book-appointment/cancel',
+      ipn_url: 'https://medicare-server-ashy.vercel.app/api/v1/book-appointment/ipn',
       shipping_method: 'Courier',
       product_name: doctor?.specialization,
       product_category: 'Electronic',
@@ -112,46 +112,16 @@ exports.booking = async (req, res) =>{
   })
 
   if(result.modifiedCount > 0){
-    res.redirect("http://localhost:3000/payment-success")
+    res.redirect("https://medicare-817a0.web.app/payment-success")
   }  
 }
 
 exports.bookingFailed = async (req, res)=>{
   const result = await Booking.deleteOne({transactionId: req.params.id})
   if(result.deletedCount){
-    res.redirect("http://localhost:3000/payment-cancel")
+    res.redirect("https://medicare-817a0.web.app/payment-failed")
   }
 }
-/*
-//  Booking An Appointment
-const bookAppointment =  async (customer, data) =>{
-  const newAppointment = {
-    user: customer.metadata.user,
-    doctor: customer.metadata.doctor,
-    ticketPrice: data.amount_total,
-    appointmentDate: customer.metadata.appointmentDate,
-    time: customer.metadata.time,
-    isPaid: data.payment_status
-  }
-  try {
-    const newBooking = new Booking(newAppointment)
-    const booking = await newBooking.save()
-    const user = await User.updateOne({_id:customer.metadata.user}, {
-      $push: {
-        appointment: booking._id,
-      }
-    })
-    const doctor = await Doctor.updateOne({_id:customer.metadata.doctor}, {
-      $push: {
-        appointment: booking._id,
-      }
-    })
-
-    console.log("user", user)
-    console.log("doctor", doctor)
-   return res.status(200).message({success: true, data: booking})
-  } catch (error) {
-   return console.log("booking error", error.message)
-  }  
+exports.bookingCancel = async (req, res)=>{  
+  return res.redirect("https://medicare-817a0.web.app/payment-cancel")  
 }
-*/
