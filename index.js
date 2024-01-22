@@ -17,7 +17,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 const corsOptions = {
-  origin: "https://medicare-817a0.web.app",
+  origin: "*",
   credentials: true,
   optionSuccessStatus: 200
 };
